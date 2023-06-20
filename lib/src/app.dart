@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uryde/src/bloc/parking_violations_report_bloc.dart';
 import 'package:uryde/src/screens/reservation.dart';
 
 class App extends StatelessWidget {

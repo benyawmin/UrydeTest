@@ -16,29 +16,31 @@ class Reservation extends StatelessWidget {
 
     /* This listener can be later used for debug purposes or other purposes
      If needed */
-    return BlocListener<ParkingViolationsReportBloc,
-        ParkingViolationsReportState>(
-      listener: (context, state) {
-        if (state is ParkingViolationsReportLoaded) {
-          // The code beneath is just a showcase
-          // debugPrint(state.props.toString());
-        }
-      },
-      child: BlocBuilder<ParkingViolationsReportBloc,
-          ParkingViolationsReportState>(
-        bloc: ParkingViolationsReportBloc(),
-        builder: (context, state) {
-          if (state is ParkingViolationsReportInitial) {
-            return buildInitialReport(theme);
-          } else if (state is ParkingViolationsReportLoading) {
-            return buildLoading();
-          } else if (state is ParkingViolationsReportLoaded) {
-            return buildReportDone();
-          }
-          return const SizedBox();
-        },
-      ),
-    );
+    return BlocProvider(
+        create: (context) => ParkingViolationsReportBloc(),
+        child: BlocListener<ParkingViolationsReportBloc,
+            ParkingViolationsReportState>(
+          listener: (context, state) {
+            if (state is ParkingViolationsReportLoaded) {
+              // The code beneath is just a showcase
+              // debugPrint(state.props.toString());
+            }
+          },
+          child: BlocBuilder<ParkingViolationsReportBloc,
+              ParkingViolationsReportState>(
+            bloc: ParkingViolationsReportBloc(),
+            builder: (context, state) {
+              if (state is ParkingViolationsReportInitial) {
+                return buildInitialReport(theme);
+              } else if (state is ParkingViolationsReportLoading) {
+                return buildLoading();
+              } else if (state is ParkingViolationsReportLoaded) {
+                return buildReportDone();
+              }
+              return const SizedBox();
+            },
+          ),
+        ));
   }
 }
 
