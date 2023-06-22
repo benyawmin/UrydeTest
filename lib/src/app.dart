@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uryde/src/screens/reservation.dart';
+import 'package:uryde/src/screens/report_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -16,7 +16,7 @@ class App extends StatelessWidget {
           home: Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: _constructAppBar(theme),
-              body: const Reservation()),
+              body: ReportScreen()),
         );
       },
     );
