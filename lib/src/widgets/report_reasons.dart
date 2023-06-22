@@ -14,29 +14,28 @@ class _ReportReasonsState extends State<ReportReasons> {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     return Column(
       children: [
-        reportOption(theme, 'Mein gebuchter Stellplatz ist blockiert',
+        reportOption('Mein gebuchter Stellplatz ist blockiert',
             ReportingOptions.blocked),
-        reportOption(theme, 'Nebenstehender Pkw behindert meinen Stellplatz',
+        reportOption('Nebenstehender Pkw behindert meinen Stellplatz',
             ReportingOptions.obstruct),
-        reportOption(theme, 'Sonstiges', ReportingOptions.other),
+        reportOption('Sonstiges', ReportingOptions.other),
       ],
     );
   }
 
-  ListTile reportOption(
-      ThemeData theme, String optionText, ReportingOptions reportingOptions) {
+  ListTile reportOption(String optionText, ReportingOptions reportingOptions) {
     return ListTile(
       contentPadding: EdgeInsets.zero,
       dense: true,
       title: Text(
         optionText,
-        style: theme.textTheme.bodyMedium!.apply(color: Colors.grey),
+        style:
+            Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.grey),
       ),
       leading: Radio<ReportingOptions>(
-        activeColor: theme.primaryColor,
+        activeColor: Theme.of(context).primaryColor,
         value: reportingOptions,
         groupValue: _character,
         onChanged: (ReportingOptions? value) {

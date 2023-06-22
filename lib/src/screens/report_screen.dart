@@ -15,8 +15,6 @@ class ReportScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
-
     /* This listener can be later used for debug purposes or other purposes
      If needed */
     return BlocProvider(
@@ -36,7 +34,7 @@ class ReportScreen extends StatelessWidget {
                 ParkingViolationsReportState parkingViolationsReportState) {
               if (parkingViolationsReportState
                   is ParkingViolationsReportInitial) {
-                return buildInitialReport(theme, _formKey, context,
+                return buildInitialReport(_formKey, context,
                     parkingViolationsReportBloc, parkingViolationsReportState);
               } else if (parkingViolationsReportState
                   is ParkingViolationsReportLoading) {
@@ -51,13 +49,13 @@ class ReportScreen extends StatelessWidget {
                 // Loaded
               } else if (parkingViolationsReportState
                   is PlateNumberIsNotValid) {
-                return buildInitialReport(theme, _formKey, context,
+                return buildInitialReport(_formKey, context,
                     parkingViolationsReportBloc, parkingViolationsReportState);
                 // TODO
                 // Show the red fields
               } else if (parkingViolationsReportState is ReportRequestSent) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showValidationDialog(context, theme,
+                  showValidationDialog(context,
                       parkingViolationsReportState.wasApiRequestSuccessful);
                 });
               }
@@ -69,7 +67,6 @@ class ReportScreen extends StatelessWidget {
 }
 
 buildInitialReport(
-    ThemeData theme,
     GlobalKey<FormState> formKey,
     BuildContext context,
     ParkingViolationsReportBloc parkingViolationsReportBloc,
@@ -86,13 +83,13 @@ buildInitialReport(
           Center(
               child: Icon(
             Icons.report,
-            color: theme.primaryColor,
+            color: Theme.of(context).primaryColor,
             size: 6.h,
           )),
           Center(
             child: Text(
               'Falsch parker melden',
-              style: TextStyle(color: theme.primaryColor),
+              style: Theme.of(context).textTheme.bodyMedium,
             ),
           ),
           Divider(
@@ -101,7 +98,7 @@ buildInitialReport(
           ),
           Text(
             'Bitte gib das Kennzeichen des falsch parkenden Pkw an:',
-            style: TextStyle(color: theme.primaryColor),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           SizedBox(
             height: 2.h,
@@ -147,19 +144,18 @@ buildInitialReport(
                 text: TextSpan(
                   children: [
                     TextSpan(
-                      text: 'Hinweis: ',
-                      style: TextStyle(
-                        color: Colors.red,
-                        fontSize: theme.textTheme.bodySmall!.fontSize,
-                      ),
-                    ),
+                        text: 'Hinweis: ',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall!
+                            .apply(color: Colors.red)),
                     TextSpan(
                       text:
                           '''Wir benachrichten den Fahrer (wenn möglich) und vermerken diesen als Falschparker.''',
-                      style: TextStyle(
-                        color: Colors.grey,
-                        fontSize: theme.textTheme.bodySmall!.fontSize,
-                      ),
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodySmall!
+                          .apply(color: Colors.grey),
                     ),
                   ],
                 ),
@@ -171,12 +167,12 @@ buildInitialReport(
           ),
           Text(
             'Wähle den Grund Deiner Meldung:',
-            style: TextStyle(color: theme.primaryColor),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           const ReportReasons(),
           Text(
             'Anmerkungen: ',
-            style: TextStyle(color: theme.primaryColor),
+            style: Theme.of(context).textTheme.bodyMedium,
           ),
           SizedBox(
             height: 1.h,
@@ -187,7 +183,7 @@ buildInitialReport(
                   maxLength: 200,
                   textInputType: TextInputType.multiline,
                   fieldNumber: 3)),
-          SizedBox(height: 1.h),
+          SizedBox(height: 10.h),
           Align(
             alignment: Alignment.centerRight,
             child: SizedBox(
@@ -195,10 +191,9 @@ buildInitialReport(
               width: 45.w,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: theme.primaryColor,
+                      backgroundColor: Theme.of(context).primaryColor,
                       shape: const StadiumBorder()),
                   onPressed: () {
-                    // TODO
                     parkingViolationsReportBloc
                         .add(PlateNumberValidation(formKey));
 
@@ -209,18 +204,19 @@ buildInitialReport(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(
+                      Icon(
+                        size: 3.h,
                         Icons.report_outlined,
                         color: Colors.white,
                       ),
                       SizedBox(
                         width: 1.w,
                       ),
-                      Text(
-                        'Falschparker melden',
-                        style: theme.textTheme.bodySmall!
-                            .apply(color: Colors.white, fontWeightDelta: 1),
-                      )
+                      Text('Falschparker melden',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall!
+                              .apply(color: Colors.white, fontWeightDelta: 1))
                     ],
                   )),
             ),
@@ -235,8 +231,7 @@ Widget buildLoading() {
   return const Center(child: CircularProgressIndicator());
 }
 
-void showValidationDialog(
-    BuildContext context, ThemeData theme, bool wasApiRequestSuccessful) {
+void showValidationDialog(BuildContext context, bool wasApiRequestSuccessful) {
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
@@ -244,7 +239,7 @@ void showValidationDialog(
         child: AlertDialog(
           title: Text(
             'Report status',
-            style: theme.textTheme.titleSmall,
+            style: Theme.of(context).textTheme.titleSmall,
           ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
@@ -252,11 +247,11 @@ void showValidationDialog(
               wasApiRequestSuccessful
                   ? Text(
                       'Driver reported successfully',
-                      style: theme.textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     )
                   : Text(
                       'Something went wrong',
-                      style: theme.textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall,
                     ),
             ],
           ),
@@ -265,7 +260,10 @@ void showValidationDialog(
               onPressed: () {
                 Navigator.of(dialogContext).pop(); // Close the dialog
               },
-              child: Text('Close'),
+              child: Text(
+                'Close',
+                style: Theme.of(context).textTheme.bodySmall,
+              ),
             ),
           ],
         ),

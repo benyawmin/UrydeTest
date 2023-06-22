@@ -18,18 +18,6 @@ class ParkingViolationsReportBloc
       emit(ParkingViolationsReportInitial());
     });
 
-    on<PlateField0>((event, emit) {
-      // TODO: implement event handler
-    });
-
-    on<PlateField1>((event, emit) {
-      // TODO: implement event handler
-    });
-
-    on<PlateField2>((event, emit) {
-      // TODO: implement event handler
-    });
-
     on<PlateNumberValidation>((event, emit) {
       if (event.formKey.currentState!.validate()) {
         event.formKey.currentState!.save();

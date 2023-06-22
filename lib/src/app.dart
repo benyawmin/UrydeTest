@@ -7,15 +7,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ThemeData theme = Theme.of(context);
     return Sizer(
       builder: (context, orientation, deviceType) {
         return MaterialApp(
           title: 'Uryde',
-          theme: _constructThemeData(theme),
+          theme: _constructThemeData(Theme.of(context)),
           home: Scaffold(
               resizeToAvoidBottomInset: false,
-              appBar: _constructAppBar(theme),
+              appBar: _constructAppBar(Theme.of(context), context),
               body: ReportScreen()),
         );
       },
@@ -33,34 +32,42 @@ ThemeData _constructThemeData(ThemeData theme) {
       textTheme: TextTheme(
         titleLarge: TextStyle(
           fontSize: 14.sp,
+          fontWeight: FontWeight.bold,
           color: theme.primaryColor,
           fontFamily: 'open_sans',
         ),
         titleMedium: TextStyle(
           fontSize: 12.sp,
+          fontWeight: FontWeight.bold,
           color: theme.primaryColor,
           fontFamily: 'open_sans',
         ),
         titleSmall: TextStyle(
           fontSize: 10.sp,
+          fontWeight: FontWeight.bold,
           color: theme.primaryColor,
           fontFamily: 'open_sans',
         ),
         bodyLarge: TextStyle(
-            fontSize: 14.sp,
+            fontSize: 12.sp,
+            fontWeight: FontWeight.normal,
             fontFamily: 'open_sans',
             color: theme.primaryColor),
         bodyMedium: TextStyle(
             fontSize: 12.sp,
+            fontWeight: FontWeight.normal,
             fontFamily: 'open_sans',
             color: theme.primaryColor),
         bodySmall: TextStyle(
-            fontSize: 8.sp, fontFamily: 'open_sans', color: theme.primaryColor),
+            fontSize: 8.sp,
+            fontWeight: FontWeight.normal,
+            fontFamily: 'open_sans',
+            color: theme.primaryColor),
       ));
 }
 
 // Constructing the AppBar for the application
-AppBar _constructAppBar(ThemeData theme) {
+AppBar _constructAppBar(ThemeData theme, BuildContext context) {
   return AppBar(
       backgroundColor: Colors.white,
       title: Row(
@@ -82,9 +89,9 @@ AppBar _constructAppBar(ThemeData theme) {
           SizedBox(
             width: 2.w,
           ),
-          const Text(
+          Text(
             'Deine Reservierung',
-            style: TextStyle(color: Color(0xFF009688)),
+            style: Theme.of(context).textTheme.titleMedium,
           )
         ],
       ));

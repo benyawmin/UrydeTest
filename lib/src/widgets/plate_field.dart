@@ -15,7 +15,6 @@ class PlateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final parkingViolationsReportBloc =
         BlocProvider.of<ParkingViolationsReportBloc>(context);
 
@@ -54,7 +53,7 @@ class PlateField extends StatelessWidget {
       keyboardType: textInputType,
       maxLength: maxLength,
       maxLines: null,
-      style: TextStyle(color: theme.primaryColor),
+      style: Theme.of(context).textTheme.bodyMedium,
       decoration: InputDecoration(
         hintText: textInputType == TextInputType.multiline ? 'Deine infos' : '',
         counterText: '',
