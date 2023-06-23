@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:uryde/src/bloc/resources/api.dart';
+import 'package:uryde/src/resources/api.dart';
 
 abstract class UserRepository {
   Future<String> sendReport(Map<String, dynamic> requestData);

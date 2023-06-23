@@ -19,3 +19,11 @@ class SendParkingViolationReport extends ParkingViolationsReportEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ReportReasonSelection extends ParkingViolationsReportEvent {
+  final String reportReasonSelectedValue;
+  const ReportReasonSelection({required this.reportReasonSelectedValue});
+
+  @override
+  List<Object?> get props => [];
+}

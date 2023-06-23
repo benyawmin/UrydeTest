@@ -15,12 +15,9 @@ class PlateField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final parkingViolationsReportBloc =
-        BlocProvider.of<ParkingViolationsReportBloc>(context);
-
     List<TextInputFormatter>? inputFormatters;
 
-    /* This condition could be written more simple but this way it is more 
+    /* This condition could be written more simple but this way it is more
     readable */
     if (fieldNumber != 3) {
       if (fieldNumber == 2) {
@@ -40,8 +37,8 @@ class PlateField extends StatelessWidget {
 
     return TextFormField(
       onSaved: ((newValue) {}),
-      // fieldNumber != 3 could cause an error
       validator: (value) {
+        print(value);
         if (value == null || value.isEmpty || value.length != maxLength) {
           return '';
         }

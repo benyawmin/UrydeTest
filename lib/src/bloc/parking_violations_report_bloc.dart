@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uryde/src/bloc/resources/repository.dart';
+import 'package:uryde/src/resources/repository.dart';
 part 'parking_violations_report_event.dart';
 part 'parking_violations_report_state.dart';
 
+// TODO
+// Complete it
 // REMEMBER TO USE DEPENDENCY INJECTION (GET_IT) IN YOUR CODE TOO
 // I WAS LITERALLY USING IT IN MY LAST JOB I JUST FORGOT ABOUT IT
 
@@ -22,13 +24,8 @@ class ParkingViolationsReportBloc
       if (event.formKey.currentState!.validate()) {
         event.formKey.currentState!.save();
         emit(PlateNumberIsValid());
-
-        print('everything is entered');
-        // Send data to API
       } else {
         emit(PlateNumberIsNotValid());
-        print('everything is not entered');
-        // Do not send the data until all errors are gone
       }
     });
 
@@ -42,6 +39,10 @@ class ParkingViolationsReportBloc
       } catch (error) {
         emit(const ReportRequestSent(wasApiRequestSuccessful: false));
       }
+    });
+
+    on<ReportReasonSelection>((event, emit) {
+      print(event.reportReasonSelectedValue);
     });
   }
 }

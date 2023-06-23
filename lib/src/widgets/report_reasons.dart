@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:uryde/src/bloc/parking_violations_report_bloc.dart';
 
 class ReportReasons extends StatefulWidget {
-  const ReportReasons({super.key});
+  // TODO
+  // USE GETIT instead of passing the bloc to child like this
+  // OR just create an instance here in build context
+  final ParkingViolationsReportBloc parkingViolationsReportBloc;
+  const ReportReasons({super.key, required this.parkingViolationsReportBloc});
 
   @override
   State<ReportReasons> createState() => _ReportReasonsState();
@@ -42,6 +47,10 @@ class _ReportReasonsState extends State<ReportReasons> {
           setState(() {
             _character = value;
           });
+          // TODO
+          // This should be moved to main screen because its only on changed here!
+          widget.parkingViolationsReportBloc.add(
+              ReportReasonSelection(reportReasonSelectedValue: optionText));
         },
       ),
     );

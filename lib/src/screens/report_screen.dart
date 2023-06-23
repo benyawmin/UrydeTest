@@ -43,16 +43,16 @@ class ReportScreen extends StatelessWidget {
                   is ParkingViolationsReportLoaded) {
                 // return buildReportDone();
               } else if (parkingViolationsReportState is PlateNumberIsValid) {
-                parkingViolationsReportBloc.add(SendParkingViolationReport());
                 // TODO
-                // Change State based on the result (failed or successful)
-                // Loaded
+                // See the comment below
+                parkingViolationsReportBloc.add(SendParkingViolationReport(
+                    /** Send the plate number and 
+                radio button reason here */
+                    ));
               } else if (parkingViolationsReportState
                   is PlateNumberIsNotValid) {
                 return buildInitialReport(_formKey, context,
                     parkingViolationsReportBloc, parkingViolationsReportState);
-                // TODO
-                // Show the red fields
               } else if (parkingViolationsReportState is ReportRequestSent) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showValidationDialog(context,
@@ -169,7 +169,9 @@ buildInitialReport(
             'Wähle den Grund Deiner Meldung:',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          const ReportReasons(),
+          ReportReasons(
+            parkingViolationsReportBloc: parkingViolationsReportBloc,
+          ),
           Text(
             'Anmerkungen: ',
             style: Theme.of(context).textTheme.bodyMedium,
@@ -196,10 +198,6 @@ buildInitialReport(
                   onPressed: () {
                     parkingViolationsReportBloc
                         .add(PlateNumberValidation(formKey));
-
-                    if (parkingViolationsReportState is PlateNumberIsValid) {
-                      print(parkingViolationsReportState);
-                    }
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
