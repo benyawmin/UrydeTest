@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uryde/src/widgets/plate_field.dart';
+import 'package:uryde/src/dependency.dart';
+import 'package:uryde/src/widgets/plate_number.dart';
+import 'package:uryde/src/widgets/show_validation_dialog.dart';
+import 'package:uryde/src/widgets/text_form_field.dart';
 import 'package:uryde/src/widgets/report_reasons.dart';
 import '../bloc/parking_violations_report_bloc.dart';
 
@@ -11,48 +14,50 @@ class ReportScreen extends StatelessWidget {
 
   ReportScreen({super.key});
 
-  final parkingViolationsReportBloc = ParkingViolationsReportBloc();
-
   @override
   Widget build(BuildContext context) {
     /* This listener can be later used for debug purposes or other purposes
      If needed */
     return BlocProvider(
-        create: (context) => parkingViolationsReportBloc,
+        create: (context) => getIt.get<ParkingViolationsReportBloc>(),
         child: BlocListener<ParkingViolationsReportBloc,
             ParkingViolationsReportState>(
           listener: (context, state) {
-            if (state is ParkingViolationsReportLoaded) {
-              // The code beneath is just a showcase for testing
-              // debugPrint(state.props.toString());
-            }
+            // if (state is ParkingViolationsReportLoaded) {
+            //   // The code beneath is just a showcase for testing
+            //   // debugPrint(state.props.toString());
+            // }
           },
           child: BlocBuilder<ParkingViolationsReportBloc,
               ParkingViolationsReportState>(
-            bloc: parkingViolationsReportBloc,
+            bloc: getIt.get<ParkingViolationsReportBloc>(),
             builder: (BuildContext context,
                 ParkingViolationsReportState parkingViolationsReportState) {
               if (parkingViolationsReportState
                   is ParkingViolationsReportInitial) {
-                return buildInitialReport(_formKey, context,
-                    parkingViolationsReportBloc, parkingViolationsReportState);
+                return buildInitialReport(
+                    _formKey, context, parkingViolationsReportState);
               } else if (parkingViolationsReportState
                   is ParkingViolationsReportLoading) {
                 return buildLoading();
-              } else if (parkingViolationsReportState
-                  is ParkingViolationsReportLoaded) {
-                // return buildReportDone();
-              } else if (parkingViolationsReportState is PlateNumberIsValid) {
+              }
+              // else if (parkingViolationsReportState
+              //     is ParkingViolationsReportLoaded) {
+              //   // return buildReportDone();
+              // }
+              else if (parkingViolationsReportState is PlateNumberIsValid) {
                 // TODO
                 // See the comment below
-                parkingViolationsReportBloc.add(SendParkingViolationReport(
-                    /** Send the plate number and 
+                getIt
+                    .get<ParkingViolationsReportBloc>()
+                    .add(SendParkingViolationReport(
+                        /** Send the plate number and 
                 radio button reason here */
-                    ));
+                        ));
               } else if (parkingViolationsReportState
                   is PlateNumberIsNotValid) {
-                return buildInitialReport(_formKey, context,
-                    parkingViolationsReportBloc, parkingViolationsReportState);
+                return buildInitialReport(
+                    _formKey, context, parkingViolationsReportState);
               } else if (parkingViolationsReportState is ReportRequestSent) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showValidationDialog(context,
@@ -66,10 +71,7 @@ class ReportScreen extends StatelessWidget {
   }
 }
 
-buildInitialReport(
-    GlobalKey<FormState> formKey,
-    BuildContext context,
-    ParkingViolationsReportBloc parkingViolationsReportBloc,
+buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
     ParkingViolationsReportState parkingViolationsReportState) {
   return Padding(
     padding: EdgeInsets.all(2.h),
@@ -104,38 +106,8 @@ buildInitialReport(
             height: 2.h,
           ),
           // The plate number row
-          Form(
-            key: formKey,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.baseline,
-              textBaseline: TextBaseline.alphabetic,
-              children: [
-                SizedBox(
-                    width: 14.h,
-                    height: 8.h,
-                    child: const PlateField(
-                        maxLength: 3,
-                        textInputType: TextInputType.name,
-                        fieldNumber: 0)),
-                const Text(' - '),
-                SizedBox(
-                    width: 10.h,
-                    height: 8.h,
-                    child: const PlateField(
-                        maxLength: 2,
-                        textInputType: TextInputType.name,
-                        fieldNumber: 1)),
-                const Text(' - '),
-                SizedBox(
-                    width: 16.h,
-                    height: 8.h,
-                    child: const PlateField(
-                        maxLength: 5,
-                        textInputType: TextInputType.number,
-                        fieldNumber: 2)),
-              ],
-            ),
+          PlateNumber(
+            formKey: formKey,
           ),
           Wrap(
             children: [
@@ -169,9 +141,7 @@ buildInitialReport(
             'Wähle den Grund Deiner Meldung:',
             style: Theme.of(context).textTheme.bodyMedium,
           ),
-          ReportReasons(
-            parkingViolationsReportBloc: parkingViolationsReportBloc,
-          ),
+          const ReportReasons(),
           Text(
             'Anmerkungen: ',
             style: Theme.of(context).textTheme.bodyMedium,
@@ -181,7 +151,7 @@ buildInitialReport(
           ),
           SizedBox(
               height: 15.h,
-              child: const PlateField(
+              child: const ReportTextFields(
                   maxLength: 200,
                   textInputType: TextInputType.multiline,
                   fieldNumber: 3)),
@@ -196,7 +166,8 @@ buildInitialReport(
                       backgroundColor: Theme.of(context).primaryColor,
                       shape: const StadiumBorder()),
                   onPressed: () {
-                    parkingViolationsReportBloc
+                    getIt
+                        .get<ParkingViolationsReportBloc>()
                         .add(PlateNumberValidation(formKey));
                   },
                   child: Row(
@@ -233,38 +204,9 @@ void showValidationDialog(BuildContext context, bool wasApiRequestSuccessful) {
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
-      return Card(
-        child: AlertDialog(
-          title: Text(
-            'Report status',
-            style: Theme.of(context).textTheme.titleSmall,
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              wasApiRequestSuccessful
-                  ? Text(
-                      'Driver reported successfully',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    )
-                  : Text(
-                      'Something went wrong',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(dialogContext).pop(); // Close the dialog
-              },
-              child: Text(
-                'Close',
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
-            ),
-          ],
-        ),
+      return ShowValidationDialog(
+        dialogContext: context,
+        wasApiRequestSuccessful: wasApiRequestSuccessful,
       );
     },
   );

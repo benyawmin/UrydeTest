@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:uryde/src/bloc/parking_violations_report_bloc.dart';
+import 'package:uryde/src/dependency.dart';
 
 class ReportReasons extends StatefulWidget {
-  // TODO
-  // USE GETIT instead of passing the bloc to child like this
-  // OR just create an instance here in build context
-  final ParkingViolationsReportBloc parkingViolationsReportBloc;
-  const ReportReasons({super.key, required this.parkingViolationsReportBloc});
+  const ReportReasons({super.key});
 
   @override
   State<ReportReasons> createState() => _ReportReasonsState();
@@ -14,18 +11,22 @@ class ReportReasons extends StatefulWidget {
 
 enum ReportingOptions { blocked, obstruct, other }
 
+// TODO
+// Send the default value of radiobutton
+String blockedOptionText = 'Mein gebuchter Stellplatz ist blockiert';
+String obstructOptionText = 'Nebenstehender Pkw behindert meinen Stellplatz';
+String otherOptionText = 'Sonstiges';
+
 class _ReportReasonsState extends State<ReportReasons> {
-  ReportingOptions? _character = ReportingOptions.blocked;
+  ReportingOptions? _option = ReportingOptions.blocked;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        reportOption('Mein gebuchter Stellplatz ist blockiert',
-            ReportingOptions.blocked),
-        reportOption('Nebenstehender Pkw behindert meinen Stellplatz',
-            ReportingOptions.obstruct),
-        reportOption('Sonstiges', ReportingOptions.other),
+        reportOption(blockedOptionText, ReportingOptions.blocked),
+        reportOption(obstructOptionText, ReportingOptions.obstruct),
+        reportOption(otherOptionText, ReportingOptions.other),
       ],
     );
   }
@@ -42,14 +43,14 @@ class _ReportReasonsState extends State<ReportReasons> {
       leading: Radio<ReportingOptions>(
         activeColor: Theme.of(context).primaryColor,
         value: reportingOptions,
-        groupValue: _character,
+        groupValue: _option,
         onChanged: (ReportingOptions? value) {
           setState(() {
-            _character = value;
+            _option = value;
           });
           // TODO
           // This should be moved to main screen because its only on changed here!
-          widget.parkingViolationsReportBloc.add(
+          getIt.get<ParkingViolationsReportBloc>().add(
               ReportReasonSelection(reportReasonSelectedValue: optionText));
         },
       ),

@@ -15,6 +15,8 @@ class ParkingViolationsReportBloc
   final UserRepository userRepository = FakeUserRepository();
 
   ParkingViolationsReportBloc() : super(ParkingViolationsReportInitial()) {
+    String reportReason = 'Mein gebuchter Stellplatz ist blockiert';
+
     // Bloc version 8 and higher Updated as below
     on<ParkingViolationsReportEvent>((event, emit) {
       emit(ParkingViolationsReportInitial());
@@ -42,7 +44,8 @@ class ParkingViolationsReportBloc
     });
 
     on<ReportReasonSelection>((event, emit) {
-      print(event.reportReasonSelectedValue);
+      reportReason = event.reportReasonSelectedValue;
+      emit(ReportReason(reportReason: reportReason));
     });
   }
 }

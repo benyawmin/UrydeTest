@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:uryde/src/bloc/parking_violations_report_bloc.dart';
 
-class PlateField extends StatelessWidget {
+class ReportTextFields extends StatelessWidget {
   final int maxLength;
   final TextInputType textInputType;
   final int fieldNumber;
-  const PlateField(
+  const ReportTextFields(
       {super.key,
       required this.maxLength,
       required this.textInputType,
@@ -17,8 +15,9 @@ class PlateField extends StatelessWidget {
   Widget build(BuildContext context) {
     List<TextInputFormatter>? inputFormatters;
 
-    /* This condition could be written more simple but this way it is more
-    readable */
+    /* Differentiating between the plate fields and report field
+    acceptable inputs
+     */
     if (fieldNumber != 3) {
       if (fieldNumber == 2) {
         inputFormatters = [
@@ -38,7 +37,6 @@ class PlateField extends StatelessWidget {
     return TextFormField(
       onSaved: ((newValue) {}),
       validator: (value) {
-        print(value);
         if (value == null || value.isEmpty || value.length != maxLength) {
           return '';
         }

@@ -12,7 +12,7 @@ class PlateNumberValidation extends ParkingViolationsReportEvent {
   final GlobalKey<FormState> formKey;
   const PlateNumberValidation(this.formKey);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [formKey];
 }
 
 class SendParkingViolationReport extends ParkingViolationsReportEvent {
@@ -25,5 +25,13 @@ class ReportReasonSelection extends ParkingViolationsReportEvent {
   const ReportReasonSelection({required this.reportReasonSelectedValue});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [reportReasonSelectedValue];
+}
+
+class UpdateTextFieldEvent extends ParkingViolationsReportEvent {
+  final String textField1;
+  final String textField2;
+  final String textField3;
+
+  const UpdateTextFieldEvent(this.textField1, this.textField2, this.textField3);
 }

@@ -17,10 +17,10 @@ class ParkingViolationsReportLoading extends ParkingViolationsReportState {
   List<Object?> get props => [];
 }
 
-class ParkingViolationsReportLoaded extends ParkingViolationsReportState {
-  @override
-  List<Object?> get props => [];
-}
+// class ParkingViolationsReportLoaded extends ParkingViolationsReportState {
+//   @override
+//   List<Object?> get props => [];
+// }
 
 class PlateNumberIsValid extends ParkingViolationsReportState {
   @override
@@ -37,5 +37,14 @@ class ReportRequestSent extends ParkingViolationsReportState {
   const ReportRequestSent({required this.wasApiRequestSuccessful});
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [wasApiRequestSuccessful];
+}
+
+class ReportReason extends ParkingViolationsReportState {
+  final String reportReason;
+  const ReportReason(
+      {this.reportReason = 'Mein gebuchter Stellplatz ist blockiert'});
+
+  @override
+  List<Object?> get props => [reportReason];
 }
