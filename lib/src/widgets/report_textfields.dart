@@ -49,7 +49,7 @@ class ReportTextFields extends StatelessWidget {
       keyboardType: textInputType,
       maxLength: maxLength,
       maxLines: null,
-      style: Theme.of(context).textTheme.bodyMedium,
+      style: Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.green),
       decoration: InputDecoration(
         hintText: textInputType == TextInputType.multiline ? 'Deine infos' : '',
         counterText: '',

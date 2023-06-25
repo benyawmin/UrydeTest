@@ -14,7 +14,7 @@ class ShowValidationDialog extends StatelessWidget {
       child: AlertDialog(
         title: Text(
           'Report status',
-          style: Theme.of(context).textTheme.titleSmall,
+          style: Theme.of(context).textTheme.titleSmall!.apply(color: Colors.green),
         ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
@@ -22,11 +22,17 @@ class ShowValidationDialog extends StatelessWidget {
             wasApiRequestSuccessful
                 ? Text(
                     'Driver reported successfully',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .apply(color: Colors.green),
                   )
                 : Text(
                     'Something went wrong',
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodySmall!
+                        .apply(color: Colors.green),
                   ),
           ],
         ),
@@ -37,7 +43,10 @@ class ShowValidationDialog extends StatelessWidget {
             },
             child: Text(
               'Close',
-              style: Theme.of(context).textTheme.bodySmall,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodySmall!
+                  .apply(color: Colors.green),
             ),
           ),
         ],

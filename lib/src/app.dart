@@ -25,45 +25,42 @@ class App extends StatelessWidget {
 // Constructing the general theme of the app
 ThemeData _constructThemeData(ThemeData theme) {
   return ThemeData(
-      // Define the default brightness and colors.
-      primaryColor: const Color(0xFF009688),
-      primaryColorDark: const Color(0xFF00796B),
-      primaryColorLight: const Color(0xFFB2DFDB),
+      // Define the default theme of the app.
       textTheme: TextTheme(
-        titleLarge: TextStyle(
-          fontSize: 14.sp,
-          fontWeight: FontWeight.bold,
-          color: theme.primaryColor,
-          fontFamily: 'open_sans',
-        ),
-        titleMedium: TextStyle(
-          fontSize: 12.sp,
-          fontWeight: FontWeight.bold,
-          color: theme.primaryColor,
-          fontFamily: 'open_sans',
-        ),
-        titleSmall: TextStyle(
-          fontSize: 10.sp,
-          fontWeight: FontWeight.bold,
-          color: theme.primaryColor,
-          fontFamily: 'open_sans',
-        ),
-        bodyLarge: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.normal,
-            fontFamily: 'open_sans',
-            color: theme.primaryColor),
-        bodyMedium: TextStyle(
-            fontSize: 12.sp,
-            fontWeight: FontWeight.normal,
-            fontFamily: 'open_sans',
-            color: theme.primaryColor),
-        bodySmall: TextStyle(
-            fontSize: 8.sp,
-            fontWeight: FontWeight.normal,
-            fontFamily: 'open_sans',
-            color: theme.primaryColor),
-      ));
+    titleLarge: TextStyle(
+      fontSize: 14.sp,
+      fontWeight: FontWeight.bold,
+      color: theme.primaryColor,
+      fontFamily: 'open_sans',
+    ),
+    titleMedium: TextStyle(
+      fontSize: 12.sp,
+      fontWeight: FontWeight.bold,
+      color: theme.primaryColor,
+      fontFamily: 'open_sans',
+    ),
+    titleSmall: TextStyle(
+      fontSize: 10.sp,
+      fontWeight: FontWeight.bold,
+      color: theme.primaryColor,
+      fontFamily: 'open_sans',
+    ),
+    bodyLarge: TextStyle(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.normal,
+        fontFamily: 'open_sans',
+        color: theme.primaryColor),
+    bodyMedium: TextStyle(
+        fontSize: 12.sp,
+        fontWeight: FontWeight.normal,
+        fontFamily: 'open_sans',
+        color: theme.primaryColor),
+    bodySmall: TextStyle(
+        fontSize: 8.sp,
+        fontWeight: FontWeight.normal,
+        fontFamily: 'open_sans',
+        color: theme.primaryColor),
+  ));
 }
 
 // Constructing the AppBar for the application
@@ -91,7 +88,10 @@ AppBar _constructAppBar(ThemeData theme, BuildContext context) {
           ),
           Text(
             'Deine Reservierung',
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme.of(context)
+                .textTheme
+                .titleMedium!
+                .apply(color: Colors.green),
           )
         ],
       ));

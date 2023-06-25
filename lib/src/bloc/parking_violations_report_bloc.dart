@@ -7,7 +7,7 @@ part 'parking_violations_report_state.dart';
 
 class ParkingViolationsReportBloc
     extends Bloc<ParkingViolationsReportEvent, ParkingViolationsReportState> {
-  final UserRepository userRepository = FakeUserRepository();
+  late final UserRepository userRepository = FakeUserRepository();
 
   ParkingViolationsReportBloc() : super(ParkingViolationsReportInitial()) {
     // Bloc version 8 and higher Updated as below

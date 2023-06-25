@@ -76,13 +76,16 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
           Center(
               child: Icon(
             Icons.report,
-            color: Theme.of(context).primaryColor,
+            color: Colors.green,
             size: 6.h,
           )),
           Center(
             child: Text(
               'Falsch parker melden',
-              style: Theme.of(context).textTheme.bodyMedium,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium!
+                  .apply(color: Colors.green),
             ),
           ),
           Divider(
@@ -91,7 +94,10 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
           ),
           Text(
             'Bitte gib das Kennzeichen des falsch parkenden Pkw an:',
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .apply(color: Colors.green),
           ),
           SizedBox(
             height: 2.h,
@@ -128,12 +134,18 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
           ),
           Text(
             'Wähle den Grund Deiner Meldung:',
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .apply(color: Colors.green),
           ),
           const ReportReasons(),
           Text(
             'Anmerkungen: ',
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: Theme.of(context)
+                .textTheme
+                .bodyMedium!
+                .apply(color: Colors.green),
           ),
           SizedBox(
             height: 1.h,
@@ -153,7 +165,7 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
               width: 45.w,
               child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Theme.of(context).primaryColor,
+                      backgroundColor: Colors.green,
                       shape: const StadiumBorder()),
                   onPressed: () {
                     getIt
