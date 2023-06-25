@@ -8,6 +8,7 @@ abstract class ParkingViolationsReportEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+// Checks if the platenumber entered by user is valid or not
 class PlateNumberValidation extends ParkingViolationsReportEvent {
   final GlobalKey<FormState> formKey;
   const PlateNumberValidation(this.formKey);
@@ -15,23 +16,8 @@ class PlateNumberValidation extends ParkingViolationsReportEvent {
   List<Object?> get props => [formKey];
 }
 
+// sending the report with the data entered
 class SendParkingViolationReport extends ParkingViolationsReportEvent {
   @override
   List<Object?> get props => [];
-}
-
-class ReportReasonSelection extends ParkingViolationsReportEvent {
-  final String reportReasonSelectedValue;
-  const ReportReasonSelection({required this.reportReasonSelectedValue});
-
-  @override
-  List<Object?> get props => [reportReasonSelectedValue];
-}
-
-class UpdateTextFieldEvent extends ParkingViolationsReportEvent {
-  final String textField1;
-  final String textField2;
-  final String textField3;
-
-  const UpdateTextFieldEvent(this.textField1, this.textField2, this.textField3);
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:uryde/src/widgets/text_form_field.dart';
+import 'package:uryde/src/widgets/report_textfields.dart';
 
 class PlateNumber extends StatelessWidget {
   final GlobalKey<FormState> formKey;
@@ -19,26 +19,26 @@ class PlateNumber extends StatelessWidget {
           SizedBox(
               width: 14.h,
               height: 8.h,
-              child: const ReportTextFields(
+              child: ReportTextFields(
                   maxLength: 3,
                   textInputType: TextInputType.name,
-                  fieldNumber: 0)),
+                  fieldNumber: 0, context: context,)),
           const Text(' - '),
           SizedBox(
               width: 10.h,
               height: 8.h,
-              child: const ReportTextFields(
+              child: ReportTextFields(
                   maxLength: 2,
                   textInputType: TextInputType.name,
-                  fieldNumber: 1)),
+                  fieldNumber: 1, context: context,)),
           const Text(' - '),
           SizedBox(
               width: 16.h,
               height: 8.h,
-              child: const ReportTextFields(
+              child: ReportTextFields(
                   maxLength: 5,
                   textInputType: TextInputType.number,
-                  fieldNumber: 2)),
+                  fieldNumber: 2, context: context,)),
         ],
       ),
     );

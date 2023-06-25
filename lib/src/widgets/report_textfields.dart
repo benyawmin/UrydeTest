@@ -9,15 +9,14 @@ class ReportTextFields extends StatelessWidget {
       {super.key,
       required this.maxLength,
       required this.textInputType,
-      required this.fieldNumber});
+      required this.fieldNumber,
+      required BuildContext context});
 
   @override
   Widget build(BuildContext context) {
     List<TextInputFormatter>? inputFormatters;
 
-    /* Differentiating between the plate fields and report field
-    acceptable inputs
-     */
+    // Differentiating between the plate fields and report field acceptable inputs
     if (fieldNumber != 3) {
       if (fieldNumber == 2) {
         inputFormatters = [
@@ -35,7 +34,9 @@ class ReportTextFields extends StatelessWidget {
     }
 
     return TextFormField(
-      onSaved: ((newValue) {}),
+      onSaved: ((newValue) {
+        // Sending the plate number and the report text here
+      }),
       validator: (value) {
         if (value == null || value.isEmpty || value.length != maxLength) {
           return '';

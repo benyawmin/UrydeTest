@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:uryde/src/bloc/parking_violations_report_bloc.dart';
-import 'package:uryde/src/dependency.dart';
 
 class ReportReasons extends StatefulWidget {
   const ReportReasons({super.key});
@@ -11,8 +9,7 @@ class ReportReasons extends StatefulWidget {
 
 enum ReportingOptions { blocked, obstruct, other }
 
-// TODO
-// Send the default value of radiobutton
+// Setting values of the reporting options
 String blockedOptionText = 'Mein gebuchter Stellplatz ist blockiert';
 String obstructOptionText = 'Nebenstehender Pkw behindert meinen Stellplatz';
 String otherOptionText = 'Sonstiges';
@@ -48,10 +45,6 @@ class _ReportReasonsState extends State<ReportReasons> {
           setState(() {
             _option = value;
           });
-          // TODO
-          // This should be moved to main screen because its only on changed here!
-          getIt.get<ParkingViolationsReportBloc>().add(
-              ReportReasonSelection(reportReasonSelectedValue: optionText));
         },
       ),
     );

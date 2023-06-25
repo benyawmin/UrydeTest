@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sizer/sizer.dart';
 import 'package:uryde/src/dependency.dart';
 import 'package:uryde/src/widgets/plate_number.dart';
+import 'package:uryde/src/widgets/report_textfields.dart';
 import 'package:uryde/src/widgets/show_validation_dialog.dart';
-import 'package:uryde/src/widgets/text_form_field.dart';
 import 'package:uryde/src/widgets/report_reasons.dart';
 import '../bloc/parking_violations_report_bloc.dart';
 
@@ -13,11 +13,10 @@ class ReportScreen extends StatelessWidget {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ReportScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
-    /* This listener can be later used for debug purposes or other purposes
-     If needed */
+    // This listener can be later used for debug purposes or other purposes
+    // If needed
     return BlocProvider(
         create: (context) => getIt.get<ParkingViolationsReportBloc>(),
         child: BlocListener<ParkingViolationsReportBloc,
@@ -40,27 +39,19 @@ class ReportScreen extends StatelessWidget {
               } else if (parkingViolationsReportState
                   is ParkingViolationsReportLoading) {
                 return buildLoading();
-              }
-              // else if (parkingViolationsReportState
-              //     is ParkingViolationsReportLoaded) {
-              //   // return buildReportDone();
-              // }
-              else if (parkingViolationsReportState is PlateNumberIsValid) {
-                // TODO
-                // See the comment below
+              } else if (parkingViolationsReportState is PlateNumberIsValid) {
                 getIt
                     .get<ParkingViolationsReportBloc>()
-                    .add(SendParkingViolationReport(
-                        /** Send the plate number and 
-                radio button reason here */
-                        ));
+                    // Send the plate number and
+                    //radio button reason here
+                    .add(SendParkingViolationReport());
               } else if (parkingViolationsReportState
                   is PlateNumberIsNotValid) {
                 return buildInitialReport(
                     _formKey, context, parkingViolationsReportState);
               } else if (parkingViolationsReportState is ReportRequestSent) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
-                  showValidationDialog(context,
+                  showReportSentDialog(context,
                       parkingViolationsReportState.wasApiRequestSuccessful);
                 });
               }
@@ -106,9 +97,7 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
             height: 2.h,
           ),
           // The plate number row
-          PlateNumber(
-            formKey: formKey,
-          ),
+          PlateNumber(formKey: formKey),
           Wrap(
             children: [
               RichText(
@@ -151,10 +140,11 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
           ),
           SizedBox(
               height: 15.h,
-              child: const ReportTextFields(
+              child: ReportTextFields(
                   maxLength: 200,
                   textInputType: TextInputType.multiline,
-                  fieldNumber: 3)),
+                  fieldNumber: 3,
+                  context: context)),
           SizedBox(height: 10.h),
           Align(
             alignment: Alignment.centerRight,
@@ -200,7 +190,8 @@ Widget buildLoading() {
   return const Center(child: CircularProgressIndicator());
 }
 
-void showValidationDialog(BuildContext context, bool wasApiRequestSuccessful) {
+// Shows the dialog if the report was send successfully to the api or not
+void showReportSentDialog(BuildContext context, bool wasApiRequestSuccessful) {
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {

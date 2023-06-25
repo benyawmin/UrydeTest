@@ -17,11 +17,7 @@ class ParkingViolationsReportLoading extends ParkingViolationsReportState {
   List<Object?> get props => [];
 }
 
-// class ParkingViolationsReportLoaded extends ParkingViolationsReportState {
-//   @override
-//   List<Object?> get props => [];
-// }
-
+// The plateNumber is valid according to the plate number rules set in the widget
 class PlateNumberIsValid extends ParkingViolationsReportState {
   @override
   List<Object?> get props => [];
@@ -32,19 +28,11 @@ class PlateNumberIsNotValid extends ParkingViolationsReportState {
   List<Object?> get props => [];
 }
 
+// The report will be sent to api when all the validation conditions are met
 class ReportRequestSent extends ParkingViolationsReportState {
   final bool wasApiRequestSuccessful;
   const ReportRequestSent({required this.wasApiRequestSuccessful});
 
   @override
   List<Object?> get props => [wasApiRequestSuccessful];
-}
-
-class ReportReason extends ParkingViolationsReportState {
-  final String reportReason;
-  const ReportReason(
-      {this.reportReason = 'Mein gebuchter Stellplatz ist blockiert'});
-
-  @override
-  List<Object?> get props => [reportReason];
 }
