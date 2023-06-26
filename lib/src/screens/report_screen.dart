@@ -10,7 +10,6 @@ import 'package:uryde/src/widgets/report_reasons.dart';
 import '../bloc/parking_violations_report_bloc.dart';
 
 class ReportScreen extends StatelessWidget {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   ReportScreen({super.key});
   @override
@@ -35,7 +34,7 @@ class ReportScreen extends StatelessWidget {
               if (parkingViolationsReportState
                   is ParkingViolationsReportInitial) {
                 return buildInitialReport(
-                    _formKey, context, parkingViolationsReportState);
+                     context, parkingViolationsReportState);
               } else if (parkingViolationsReportState
                   is ParkingViolationsReportLoading) {
                 return buildLoading();
@@ -48,7 +47,7 @@ class ReportScreen extends StatelessWidget {
               } else if (parkingViolationsReportState
                   is PlateNumberIsNotValid) {
                 return buildInitialReport(
-                    _formKey, context, parkingViolationsReportState);
+                    context, parkingViolationsReportState);
               } else if (parkingViolationsReportState is ReportRequestSent) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showReportSentDialog(context,
@@ -62,7 +61,7 @@ class ReportScreen extends StatelessWidget {
   }
 }
 
-buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
+buildInitialReport( BuildContext context,
     ParkingViolationsReportState parkingViolationsReportState) {
   return Padding(
     padding: EdgeInsets.all(2.h),
@@ -103,7 +102,7 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
             height: 2.h,
           ),
           // The plate number row
-          PlateNumber(formKey: formKey),
+          const PlateNumber(),
           Wrap(
             children: [
               RichText(
@@ -170,7 +169,7 @@ buildInitialReport(GlobalKey<FormState> formKey, BuildContext context,
                   onPressed: () {
                     getIt
                         .get<ParkingViolationsReportBloc>()
-                        .add(PlateNumberValidation(formKey));
+                        .add(PlateNumberValidation(getIt.get<GlobalKey<FormState>>()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
