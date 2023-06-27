@@ -10,8 +10,7 @@ import 'package:uryde/src/widgets/report_reasons.dart';
 import '../bloc/parking_violations_report_bloc.dart';
 
 class ReportScreen extends StatelessWidget {
-
-  ReportScreen({super.key});
+  const ReportScreen({super.key});
   @override
   Widget build(BuildContext context) {
     // This listener can be later used for debug purposes or other purposes
@@ -34,7 +33,7 @@ class ReportScreen extends StatelessWidget {
               if (parkingViolationsReportState
                   is ParkingViolationsReportInitial) {
                 return buildInitialReport(
-                     context, parkingViolationsReportState);
+                    context, parkingViolationsReportState);
               } else if (parkingViolationsReportState
                   is ParkingViolationsReportLoading) {
                 return buildLoading();
@@ -61,7 +60,7 @@ class ReportScreen extends StatelessWidget {
   }
 }
 
-buildInitialReport( BuildContext context,
+buildInitialReport(BuildContext context,
     ParkingViolationsReportState parkingViolationsReportState) {
   return Padding(
     padding: EdgeInsets.all(2.h),
@@ -151,7 +150,7 @@ buildInitialReport( BuildContext context,
           ),
           SizedBox(
               height: 15.h,
-              child: ReportTextFields(
+              child: ReportTextField(
                   maxLength: 200,
                   textInputType: TextInputType.multiline,
                   fieldNumber: 3,
@@ -167,9 +166,9 @@ buildInitialReport( BuildContext context,
                       backgroundColor: Colors.green,
                       shape: const StadiumBorder()),
                   onPressed: () {
-                    getIt
-                        .get<ParkingViolationsReportBloc>()
-                        .add(PlateNumberValidation(getIt.get<GlobalKey<FormState>>()));
+                    getIt.get<ParkingViolationsReportBloc>().add(
+                        PlateNumberValidation(
+                            getIt.get<GlobalKey<FormState>>()));
                   },
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

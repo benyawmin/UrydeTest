@@ -1,14 +1,13 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:uryde/src/dependency.dart';
 import 'package:uryde/src/resources/repository.dart';
 part 'parking_violations_report_event.dart';
 part 'parking_violations_report_state.dart';
 
 class ParkingViolationsReportBloc
     extends Bloc<ParkingViolationsReportEvent, ParkingViolationsReportState> {
-  late final UserRepository userRepository = FakeUserRepository();
-
   ParkingViolationsReportBloc() : super(ParkingViolationsReportInitial()) {
     // Bloc version 8 and higher Updated as below
     on<ParkingViolationsReportEvent>((event, emit) {
@@ -29,7 +28,7 @@ class ParkingViolationsReportBloc
     on<SendParkingViolationReport>((event, emit) async {
       emit(ParkingViolationsReportLoading());
       try {
-        await userRepository.sendReport({
+        await getIt.get<FakeUserRepository>().sendReport({
           'ParkingReport':
               'This is the report with plate number && selected reason'
         });

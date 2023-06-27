@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class ReportTextFields extends StatelessWidget {
+class ReportTextField extends StatelessWidget {
   final int maxLength;
   final TextInputType textInputType;
   final int fieldNumber;
-  const ReportTextFields(
+  const ReportTextField(
       {super.key,
       required this.maxLength,
       required this.textInputType,

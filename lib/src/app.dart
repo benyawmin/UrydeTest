@@ -15,7 +15,7 @@ class App extends StatelessWidget {
           home: Scaffold(
               resizeToAvoidBottomInset: false,
               appBar: _constructAppBar(Theme.of(context), context),
-              body: ReportScreen()),
+              body: const ReportScreen()),
         );
       },
     );

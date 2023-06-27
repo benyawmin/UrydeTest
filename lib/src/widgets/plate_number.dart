@@ -18,7 +18,7 @@ class PlateNumber extends StatelessWidget {
           SizedBox(
               width: 14.h,
               height: 8.h,
-              child: ReportTextFields(
+              child: ReportTextField(
                 maxLength: 3,
                 textInputType: TextInputType.name,
                 fieldNumber: 0,
@@ -28,7 +28,7 @@ class PlateNumber extends StatelessWidget {
           SizedBox(
               width: 10.h,
               height: 8.h,
-              child: ReportTextFields(
+              child: ReportTextField(
                 maxLength: 2,
                 textInputType: TextInputType.name,
                 fieldNumber: 1,
@@ -38,7 +38,7 @@ class PlateNumber extends StatelessWidget {
           SizedBox(
               width: 16.h,
               height: 8.h,
-              child: ReportTextFields(
+              child: ReportTextField(
                 maxLength: 5,
                 textInputType: TextInputType.number,
                 fieldNumber: 2,
