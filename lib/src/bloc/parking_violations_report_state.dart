@@ -23,11 +23,6 @@ class PlateNumberIsValid extends ParkingViolationsReportState {
   List<Object?> get props => [];
 }
 
-class PlateNumberIsNotValid extends ParkingViolationsReportState {
-  @override
-  List<Object?> get props => [];
-}
-
 // The report will be sent to api when all the validation conditions are met
 class ReportRequestSent extends ParkingViolationsReportState {
   final bool wasApiRequestSuccessful;
