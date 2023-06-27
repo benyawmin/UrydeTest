@@ -32,8 +32,7 @@ class ReportScreen extends StatelessWidget {
                 ParkingViolationsReportState parkingViolationsReportState) {
               if (parkingViolationsReportState
                   is ParkingViolationsReportInitial) {
-                return buildInitialReport(
-                    context, parkingViolationsReportState);
+                return buildInitialReport(context);
               } else if (parkingViolationsReportState
                   is ParkingViolationsReportLoading) {
                 return buildLoading();
@@ -43,10 +42,6 @@ class ReportScreen extends StatelessWidget {
                     // Send the plate number and
                     //radio button reason here
                     .add(SendParkingViolationReport());
-              } else if (parkingViolationsReportState
-                  is PlateNumberIsNotValid) {
-                return buildInitialReport(
-                    context, parkingViolationsReportState);
               } else if (parkingViolationsReportState is ReportRequestSent) {
                 WidgetsBinding.instance.addPostFrameCallback((_) {
                   showReportSentDialog(context,
@@ -60,8 +55,9 @@ class ReportScreen extends StatelessWidget {
   }
 }
 
-buildInitialReport(BuildContext context,
-    ParkingViolationsReportState parkingViolationsReportState) {
+buildInitialReport(
+  BuildContext context,
+) {
   return Padding(
     padding: EdgeInsets.all(2.h),
     child: SingleChildScrollView(

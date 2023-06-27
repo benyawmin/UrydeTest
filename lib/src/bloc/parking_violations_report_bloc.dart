@@ -20,7 +20,7 @@ class ParkingViolationsReportBloc
         event.formKey.currentState!.save();
         emit(PlateNumberIsValid());
       } else {
-        emit(PlateNumberIsNotValid());
+        emit(ParkingViolationsReportInitial());
       }
     });
 
