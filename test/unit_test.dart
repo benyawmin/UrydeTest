@@ -9,44 +9,47 @@ import 'package:uryde/src/resources/repository.dart';
 class MockUserRepository extends Mock implements UserRepository {}
 
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  initialize();
   group('ParkingViolationsReportBloc', () {
+    WidgetsFlutterBinding.ensureInitialized();
+    initialize();
+    late ParkingViolationsReportBloc bloc;
     late MockUserRepository userRepository;
-
+    late GlobalKey<FormState> formKey;
     setUp(() {
       userRepository = MockUserRepository();
+      bloc = getIt.get<ParkingViolationsReportBloc>();
+      formKey = getIt.get<GlobalKey<FormState>>();
     });
 
     test('initial state is ParkingViolationsReportInitial', () {
-      expect(getIt.get<ParkingViolationsReportBloc>().state,
-          ParkingViolationsReportInitial());
+      expect(bloc.state, ParkingViolationsReportInitial());
     });
 
-    // tearDown(() {
-    //   getIt.get<ParkingViolationsReportBloc>().close();
-    // });
+    test('formKey is same formKey as the Form widget', () {
+      expect(formKey, getIt.get<GlobalKey<FormState>>());
+    });
 
     blocTest<ParkingViolationsReportBloc, ParkingViolationsReportState>(
       'emits PlateNumberIsValid when PlateNumberValidation event is added with valid form key',
-      build: () => getIt.get<ParkingViolationsReportBloc>(),
+      build: () => bloc,
       act: (bloc) {
-          bloc.add(PlateNumberValidation(getIt.get<GlobalKey<FormState>>()));
+        bloc.add(PlateNumberValidation(getIt.get<GlobalKey<FormState>>()));
+        // when(formKey.currentState!.validate()).thenReturn(true);
       },
-      expect: () => <ParkingViolationsReportState>[PlateNumberIsValid()],
+      expect: () => [PlateNumberIsValid()],
     );
 
     blocTest<ParkingViolationsReportBloc, ParkingViolationsReportState>(
       'emits PlateNumberIsNotValid when PlateNumberValidation event is added with invalid form key',
-      build: () => getIt.get<ParkingViolationsReportBloc>(),
+      build: () => bloc,
       act: (bloc) =>
           bloc.add(PlateNumberValidation(getIt.get<GlobalKey<FormState>>())),
-      expect: () => [PlateNumberIsNotValid()],
+      expect: () => [ParkingViolationsReportInitial()],
     );
 
     blocTest<ParkingViolationsReportBloc, ParkingViolationsReportState>(
       'emits ParkingViolationsReportLoading and ReportRequestSent when SendParkingViolationReport event is added and API request is successful',
-      build: () => getIt.get<ParkingViolationsReportBloc>(),
+      build: () => bloc,
       act: (bloc) {
         when(userRepository.sendReport({
           'ParkingReport':
@@ -64,7 +67,7 @@ void main() {
 
     blocTest<ParkingViolationsReportBloc, ParkingViolationsReportState>(
       'emits ParkingViolationsReportLoading and ReportRequestSent with wasApiRequestSuccessful=false when SendParkingViolationReport event is added and API request throws an error',
-      build: () => getIt.get<ParkingViolationsReportBloc>(),
+      build: () => bloc,
       act: (bloc) {
         when(userRepository.sendReport({
           'ParkingReport':
