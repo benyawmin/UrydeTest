@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:math';
 
 class Api {
-  static Future<String> sendReport(Map<String, dynamic> requestData) {
+  Future<String> sendReport(Map<String, dynamic> requestData) {
     final completer = Completer<String>();
 
     // Simulate an API request delay of 2 seconds

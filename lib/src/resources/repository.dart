@@ -8,6 +8,7 @@ abstract class UserRepository {
 class FakeUserRepository implements UserRepository {
   @override
   Future<String> sendReport(Map<String, dynamic> requestData) {
-    return Api.sendReport(requestData);
+    Api api = Api();
+    return api.sendReport(requestData);
   }
 }
