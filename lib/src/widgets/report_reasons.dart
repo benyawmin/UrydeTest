@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uryde/src/widgets/report_option.dart';
 
 class ReportReasons extends StatefulWidget {
-  const ReportReasons({super.key});
+  const ReportReasons({Key? key}) : super(key: key);
 
   @override
   State<ReportReasons> createState() => _ReportReasonsState();
@@ -28,25 +29,16 @@ class _ReportReasonsState extends State<ReportReasons> {
     );
   }
 
-  ListTile reportOption(String optionText, ReportingOptions reportingOptions) {
-    return ListTile(
-      contentPadding: EdgeInsets.zero,
-      dense: true,
-      title: Text(
-        optionText,
-        style:
-            Theme.of(context).textTheme.bodyMedium!.apply(color: Colors.grey),
-      ),
-      leading: Radio<ReportingOptions>(
-        activeColor: Theme.of(context).primaryColor,
-        value: reportingOptions,
-        groupValue: _option,
-        onChanged: (ReportingOptions? value) {
-          setState(() {
-            _option = value;
-          });
-        },
-      ),
+  Widget reportOption(String optionText, ReportingOptions reportingOptions) {
+    return ReportOptionWidget(
+      optionText: optionText,
+      reportingOption: reportingOptions,
+      selectedOption: _option,
+      onChanged: (ReportingOptions? value) {
+        setState(() {
+          _option = value;
+        });
+      },
     );
   }
 }
